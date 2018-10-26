@@ -1,0 +1,16 @@
+{
+    "Router": {
+        "APIAddr": "10.0.0.1:8728",
+        "FTPAddr": "10.0.0.1:21",
+        "Username": "certman",
+        "Password": "VerySecurePassword!",
+        "PostScripts": ["update_cert"]
+    },
+    "Cert": {
+        "Name": "your_certificate_name",
+        "LocalCertPath": "/etc/letsencrypt/live/example.com/fullchain.pem",
+        "LocalKeyPath": "/etc/letsencrypt/live/example.com/privkey.pem",
+        "RemoteCertPath": "certman/cert.pem",
+        "RemoteKeyPath": "certman/key.pem"
+    }
+}
