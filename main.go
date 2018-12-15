@@ -13,8 +13,7 @@ import (
 	"time"
 
 	"github.com/jlaffaye/ftp"
-
-	"gopkg.in/routeros.v2"
+	routeros "gopkg.in/routeros.v2"
 )
 
 type config struct {
@@ -156,6 +155,19 @@ func main() {
 
 	// Remove any existing keypair with same certificate fingerprint
 	reply, err := r.api.Run("/certificate/print", "?fingerprint="+certFingerprint)
+	if err != nil {
+		fmt.Printf("fail: %v\n", err)
+		return
+	}
+	if len(reply.Re) > 0 {
+		if _, err = r.api.Run("/certificate/remove", "=.id="+reply.Re[0].Map[".id"]); err != nil {
+			fmt.Printf("fail: %v\n", err)
+			return
+		}
+	}
+
+	// Remove any existing keypair with same certificate name
+	reply, err = r.api.Run("/certificate/print", "?name="+c.Cert.Name)
 	if err != nil {
 		fmt.Printf("fail: %v\n", err)
 		return
